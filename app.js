@@ -21,8 +21,13 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
 
 app.get('/search', (req, res) => {
   const restaurantSearch = restaurantList.results.filter(restaurant => restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase()))
+
+  const restaurantCategory = restaurantList.results.filter(restaurant => restaurant.category.includes(req.query.keyword))
+
   if (restaurantSearch.length > 0) {
     res.render('index', { restaurant: restaurantSearch, keyword: req.query.keyword })
+  } else if (restaurantCategory.length > 0) {
+    res.render('index', { restaurant: restaurantCategory, keyword: req.query.keyword })
   } else {
     res.render('notfound')
   }
